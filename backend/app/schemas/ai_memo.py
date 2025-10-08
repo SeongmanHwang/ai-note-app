@@ -3,7 +3,7 @@ from typing import Optional, Dict, Any, List
 from datetime import datetime
 
 class AIMemoBase(BaseModel):
-    type: str  # 'summary', 'brainstorm', 'publish'
+    type: str  # 'qa', 'critical-thinking', 'summary'
     content: str
     anchor_position: Optional[int] = None
 
@@ -25,7 +25,7 @@ class AIMemo(AIMemoBase):
         from_attributes = True
 
 class AIRequest(BaseModel):
-    type: str  # 'summary', 'brainstorm', 'publish'
+    type: str  # 'qa', 'critical-thinking', 'summary'
     content: str
     context: Optional[str] = None
     prompt: Optional[str] = None

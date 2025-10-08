@@ -135,12 +135,22 @@ export default function AIPanel({
           {/* 컨텍스트 입력 */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              내용 또는 질문
+              {selectedType === 'qa' 
+                ? '질문' 
+                : selectedType === 'critical-thinking'
+                ? '분석할 주제'
+                : '정리할 내용'
+              }
             </label>
             <textarea
               value={context}
               onChange={(e) => setContext(e.target.value)}
-              placeholder="요약할 내용이나 브레인스토밍할 주제를 입력하세요..."
+              placeholder={selectedType === 'qa' 
+                ? '궁금한 질문을 입력하세요...' 
+                : selectedType === 'critical-thinking'
+                ? '비판적으로 분석하고 싶은 주제나 질문을 입력하세요...'
+                : '정리하고 싶은 내용을 입력하세요...'
+              }
               className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
               rows={3}
             />
@@ -149,13 +159,23 @@ export default function AIPanel({
           {/* 커스텀 프롬프트 */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              추가 지시사항 (선택사항)
+              {selectedType === 'qa' 
+                ? '추가 지시사항 (선택사항)' 
+                : selectedType === 'critical-thinking'
+                ? '분석 관점 (선택사항)'
+                : '정리 방향 (선택사항)'
+              }
             </label>
             <input
               type="text"
               value={customPrompt}
               onChange={(e) => setCustomPrompt(e.target.value)}
-              placeholder="예: 전문적인 톤으로, 간단하게 등..."
+              placeholder={selectedType === 'qa' 
+                ? '예: 간단하게, 자세하게, 전문적인 톤으로 등...'
+                : selectedType === 'critical-thinking'
+                ? '예: 경제적 관점에서, 사회적 관점에서, 기술적 관점에서 등...'
+                : '예: 간단하게, 자세하게, 논리적 순서로 등...'
+              }
               className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>

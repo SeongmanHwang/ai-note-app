@@ -103,12 +103,12 @@ export default function Home() {
         // 실제 OpenAI API 호출
         const openaiService = new OpenAIService(apiKey);
         
-        if (request.type === 'summary') {
+        if (request.type === 'qa') {
+          result = await openaiService.generateQA(request.content, request.prompt || '');
+        } else if (request.type === 'critical-thinking') {
+          result = await openaiService.generateCriticalThinking(request.content, request.prompt || '');
+        } else if (request.type === 'summary') {
           result = await openaiService.generateSummary(request.content, request.prompt || '');
-        } else if (request.type === 'brainstorm') {
-          result = await openaiService.generateBrainstorm(request.content, request.prompt || '');
-        } else if (request.type === 'publish') {
-          result = await openaiService.generatePublishFormat(request.content, request.prompt || '');
         } else {
           throw new Error('지원하지 않는 AI 메모 타입입니다.');
         }
@@ -155,49 +155,43 @@ export default function Home() {
 
   const generateMockResponse = (request: AIRequest): string => {
     switch (request.type) {
+      case 'qa':
+        return `
+          <p><strong>질문:</strong> ${request.content}</p>
+          <p>이 질문에 대한 답변을 제공하기 위해 정확한 정보를 검토하고 있습니다. 실제 AI 서비스에서는 더 정확하고 상세한 답변을 제공할 수 있습니다.</p>
+          <p><em>※ 이는 목업 응답입니다. 실제 API 키를 설정하면 더 정확한 답변을 받을 수 있습니다.</em></p>
+        `;
+      
+      case 'critical-thinking':
+        return `
+          <h4>비판적 분석</h4>
+          <p><strong>주제:</strong> ${request.content}</p>
+          <div class="bg-blue-50 p-3 rounded mb-2">
+            <strong>• 객관적 평가:</strong> 주제에 대한 균형잡힌 관점
+          </div>
+          <div class="bg-green-50 p-3 rounded mb-2">
+            <strong>• 장점:</strong> 긍정적인 측면들
+          </div>
+          <div class="bg-red-50 p-3 rounded mb-2">
+            <strong>• 단점:</strong> 개선이 필요한 부분들
+          </div>
+          <div class="bg-yellow-50 p-3 rounded mb-2">
+            <strong>• 개선방안:</strong> 구체적인 제안사항
+          </div>
+        `;
+      
       case 'summary':
         return `
-          <h4>요약</h4>
-          <p>입력하신 내용에 대한 요약입니다:</p>
+          <h2>정리된 문서</h2>
+          <h3>개요</h3>
+          <p>입력하신 내용을 HTML 표준에 맞춰 정리했습니다.</p>
+          <h3>주요 내용</h3>
           <ul>
-            <li>주요 포인트 1: ${request.content.slice(0, 50)}...</li>
-            <li>주요 포인트 2: 관련된 중요한 정보</li>
-            <li>주요 포인트 3: 추가 고려사항</li>
+            <li>핵심 포인트 1</li>
+            <li>핵심 포인트 2</li>
+            <li>핵심 포인트 3</li>
           </ul>
-          <p><strong>결론:</strong> 이 주제에 대해 더 자세히 알아보시려면 관련 자료를 참고하시기 바랍니다.</p>
-        `;
-      
-      case 'brainstorm':
-        return `
-          <h4>브레인스토밍 아이디어</h4>
-          <p><strong>주제:</strong> ${request.content}</p>
-          <div class="space-y-2">
-            <div class="bg-blue-50 p-3 rounded">
-              <strong>💡 아이디어 1:</strong> 혁신적인 접근 방식
-            </div>
-            <div class="bg-green-50 p-3 rounded">
-              <strong>🌟 아이디어 2:</strong> 창의적인 해결책
-            </div>
-            <div class="bg-purple-50 p-3 rounded">
-              <strong>🚀 아이디어 3:</strong> 실용적인 구현 방안
-            </div>
-          </div>
-          <p class="mt-3 text-sm text-gray-600">이 아이디어들을 바탕으로 더 구체적인 계획을 세워보세요!</p>
-        `;
-      
-      case 'publish':
-        return `
-          <h4>출판 형식 제안</h4>
-          <p>다음과 같은 구조로 정리하면 전문적인 문서가 될 것입니다:</p>
-          <ol>
-            <li><strong>제목:</strong> 명확하고 매력적인 제목</li>
-            <li><strong>서론:</strong> 배경 및 목적</li>
-            <li><strong>본문:</strong> 세부 내용을 논리적으로 구성</li>
-            <li><strong>결론:</strong> 요약 및 향후 방향</li>
-          </ol>
-          <div class="mt-3 p-3 bg-yellow-50 rounded">
-            <strong>💡 팁:</strong> 각 섹션에 적절한 제목을 추가하고, 목록과 인용을 활용하면 가독성이 향상됩니다.
-          </div>
+          <p><em>※ 실제 AI 서비스에서는 더 체계적이고 구조화된 정리를 제공합니다.</em></p>
         `;
       
       default:
