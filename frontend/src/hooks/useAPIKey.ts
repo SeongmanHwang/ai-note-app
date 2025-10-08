@@ -31,10 +31,18 @@ export function useAPIKey() {
 
   // API 키 유효성 검사
   const isValidAPIKey = (key: string): boolean => {
-    return key.startsWith('sk-') && key.length >= 20;
+    const valid = key.startsWith('sk-') && key.length >= 20;
+    console.log('API 키 유효성 검사:', { key: key ? `${key.substring(0, 10)}...` : '없음', valid });
+    return valid;
   };
 
   const hasValidAPIKey = apiKey && isValidAPIKey(apiKey);
+  
+  console.log('API 키 상태 업데이트:', { 
+    apiKey: apiKey ? `${apiKey.substring(0, 10)}...` : '없음', 
+    hasValidAPIKey,
+    isLoaded 
+  });
 
   return {
     apiKey,

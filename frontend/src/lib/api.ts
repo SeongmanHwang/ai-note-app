@@ -12,7 +12,7 @@ export interface Document {
 export interface AIMemo {
   id: number;
   document_id: number;
-  type: 'summary' | 'brainstorm' | 'publish';
+  type: 'qa' | 'critical-thinking' | 'summary';
   content: string;
   anchor_position?: number;
   created_at: string;
@@ -24,7 +24,7 @@ export interface AIMemo {
 }
 
 export interface AIRequest {
-  type: 'summary' | 'brainstorm' | 'publish';
+  type: 'qa' | 'critical-thinking' | 'summary';
   content: string;
   context?: string;
   prompt?: string;

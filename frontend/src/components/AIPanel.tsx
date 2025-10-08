@@ -19,7 +19,7 @@ export default function AIPanel({
   onDeleteMemo, 
   isLoading 
 }: AIPanelProps) {
-  const [selectedType, setSelectedType] = useState<'summary' | 'brainstorm' | 'publish'>('summary');
+  const [selectedType, setSelectedType] = useState<'qa' | 'critical-thinking' | 'summary'>('qa');
   const [customPrompt, setCustomPrompt] = useState('');
   const [context, setContext] = useState('');
   const [showAPIKeyModal, setShowAPIKeyModal] = useState(false);
@@ -46,18 +46,18 @@ export default function AIPanel({
 
   const getMemoIcon = (type: string) => {
     switch (type) {
+      case 'qa': return <Brain className="w-4 h-4" />;
+      case 'critical-thinking': return <Lightbulb className="w-4 h-4" />;
       case 'summary': return <FileText className="w-4 h-4" />;
-      case 'brainstorm': return <Lightbulb className="w-4 h-4" />;
-      case 'publish': return <Brain className="w-4 h-4" />;
-      default: return <FileText className="w-4 h-4" />;
+      default: return <Brain className="w-4 h-4" />;
     }
   };
 
   const getMemoTitle = (type: string) => {
     switch (type) {
-      case 'summary': return '정보 요약';
-      case 'brainstorm': return '브레인스토밍';
-      case 'publish': return '출판 형식';
+      case 'qa': return '질의응답';
+      case 'critical-thinking': return '비판 및 창의적 사고';
+      case 'summary': return '요약 및 정리';
       default: return 'AI 메모';
     }
   };
@@ -97,6 +97,28 @@ export default function AIPanel({
             </label>
             <div className="flex space-x-2">
               <button
+                onClick={() => setSelectedType('qa')}
+                className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  selectedType === 'qa'
+                    ? 'bg-primary-100 text-primary-700'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                <Brain className="w-4 h-4" />
+                <span>질의응답</span>
+              </button>
+              <button
+                onClick={() => setSelectedType('critical-thinking')}
+                className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  selectedType === 'critical-thinking'
+                    ? 'bg-primary-100 text-primary-700'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                <Lightbulb className="w-4 h-4" />
+                <span>비판적 사고</span>
+              </button>
+              <button
                 onClick={() => setSelectedType('summary')}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                   selectedType === 'summary'
@@ -105,29 +127,7 @@ export default function AIPanel({
                 }`}
               >
                 <FileText className="w-4 h-4" />
-                <span>요약</span>
-              </button>
-              <button
-                onClick={() => setSelectedType('brainstorm')}
-                className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  selectedType === 'brainstorm'
-                    ? 'bg-primary-100 text-primary-700'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                <Lightbulb className="w-4 h-4" />
-                <span>브레인스토밍</span>
-              </button>
-              <button
-                onClick={() => setSelectedType('publish')}
-                className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  selectedType === 'publish'
-                    ? 'bg-primary-100 text-primary-700'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                <Brain className="w-4 h-4" />
-                <span>출판</span>
+                <span>요약정리</span>
               </button>
             </div>
           </div>

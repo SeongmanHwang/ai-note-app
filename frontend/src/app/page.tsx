@@ -88,7 +88,12 @@ export default function Home() {
     setIsLoading(true);
     
     // 디버깅을 위한 로그
-    console.log('API 키 상태:', { hasValidAPIKey, apiKey: apiKey ? `${apiKey.substring(0, 10)}...` : '없음' });
+    console.log('API 키 상태:', { 
+      hasValidAPIKey, 
+      apiKey: apiKey ? `${apiKey.substring(0, 10)}...` : '없음',
+      apiKeyLength: apiKey ? apiKey.length : 0,
+      apiKeyValid: apiKey && apiKey.startsWith('sk-') && apiKey.length >= 20
+    });
     
     try {
       let result: { content: string; metadata: any };
