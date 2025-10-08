@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-gray-50 text-gray-900;
+  }
+}
+
+@layer components {
+  .editor-content {
+    @apply max-w-none focus:outline-none;
+  }
+  
+  .editor-content h1 {
+    @apply text-2xl font-bold text-gray-900 mb-4;
+  }
+  
+  .editor-content h2 {
+    @apply text-xl font-semibold text-gray-800 mb-3;
+  }
+  
+  .editor-content h3 {
+    @apply text-lg font-medium text-gray-800 mb-2;
+  }
+  
+  .editor-content p {
+    @apply mb-3 leading-relaxed;
+  }
+  
+  .editor-content ul, .editor-content ol {
+    @apply mb-3 pl-6;
+  }
+  
+  .editor-content li {
+    @apply mb-1;
+  }
+  
+  .editor-content blockquote {
+    @apply border-l-4 border-primary-500 pl-4 italic text-gray-700 my-4;
+  }
+  
+  .editor-content code {
+    @apply bg-gray-100 px-1 py-0.5 rounded text-sm font-mono;
+  }
+  
+  .editor-content pre {
+    @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto my-4;
+  }
+  
+  .editor-content pre code {
+    @apply bg-transparent p-0 text-sm;
+  }
+  
+  .ai-memo-card {
+    @apply bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow;
+  }
+  
+  .ai-memo-card h4 {
+    @apply font-semibold text-gray-800 mb-2;
+  }
+  
+  .ai-memo-card p {
+    @apply text-sm text-gray-600 leading-relaxed;
+  }
+}
+
+@layer utilities {
+  .split-screen {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-6 h-screen;
+  }
+  
+  .editor-panel {
+    @apply bg-white border-r border-gray-200 overflow-hidden;
+  }
+  
+  .ai-panel {
+    @apply bg-gray-50 overflow-y-auto;
+  }
+}
